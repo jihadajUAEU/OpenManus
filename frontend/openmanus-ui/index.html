@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="OpenManus - Advanced AI Agent Interface" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://openmanus.ai" />
+    <meta property="og:title" content="OpenManus" />
+    <meta property="og:description" content="Advanced AI Agent Interface" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://openmanus.ai" />
+    <meta property="twitter:title" content="OpenManus" />
+    <meta property="twitter:description" content="Advanced AI Agent Interface" />
+    <meta property="twitter:image" content="/og-image.png" />
+
+    <title>OpenManus</title>
+
+    <!-- Loading state styles -->
+    <style>
+      .app-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+      }
+
+      .app-loading-content {
+        text-align: center;
+      }
+
+      .app-loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #e5e7eb;
+        border-top: 5px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="app-loading">
+        <div class="app-loading-content">
+          <div class="app-loading-spinner"></div>
+          <p>Loading OpenManus...</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
