@@ -6,7 +6,7 @@ import App from './App';
 import './index.css';
 
 // Handle API requests
-const API_BASE_URL = 'http://localhost:8003'; // Change this to match your OpenManus backend
+const API_BASE_URL = 'http://localhost:8004'; // Change this to match your OpenManus backend
 
 // Global error handling
 window.onerror = (message, source, lineno, colno, error) => {

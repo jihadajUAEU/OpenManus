@@ -16,7 +16,9 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup_event():
-    print("FastAPI application started successfully")
+    print("\n=== FastAPI Server Starting ===")
+    print("Startup event triggered")
+    print("=== Server Started Successfully ===\n")
 
 
 # Configure CORS
@@ -31,11 +33,14 @@ app.add_middleware(
 
 @app.get("/")
 async def health_check():
-    print("Health check endpoint hit")
+    current_time = datetime.datetime.now().isoformat()
+    print("\n=== Health Check Request ===")
+    print(f"Time: {current_time}")
+    print("=== Health Check Complete ===\n")
     return {
         "status": "ok",
         "message": "API is running",
-        "timestamp": datetime.datetime.now().isoformat(),
+        "timestamp": current_time,
     }
 
 
@@ -108,11 +113,21 @@ async def create_agent(config: AgentConfig):
 @app.post("/api/execute")
 async def execute_command(request: CommandRequest):
     try:
+        # Use both print and logger for maximum visibility
+        print(f"\n[DEBUG] Received command: {request.command}")
+        logger.info(f"Received command request: {request.command}")
+
         agent = Manus()
-        logger.info(f"Executing command: {request.command}")
+        print(f"[DEBUG] Created Manus agent")
+        logger.info(f"Created Manus agent, executing command: {request.command}")
+
         result = await agent.run(request.command)
+        print(f"[DEBUG] Command result: {result}")
+        logger.info(f"Command executed successfully, result: {result}")
+
         return {"status": "success", "result": result}
     except Exception as e:
+        print(f"[ERROR] Command failed: {str(e)}")
         logger.error(f"Command execution failed: {str(e)}")
         return {"status": "error", "message": str(e)}
 

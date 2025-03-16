@@ -11,8 +11,14 @@ class ApiService {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
+    const url = `${API_BASE_URL}${endpoint}`;
+    console.log('[API Request] Sending request to:', url, {
+      method: options.method || 'GET',
+      body: options.body ? JSON.parse(options.body as string) : undefined
+    });
+
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      const response = await fetch(url, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
@@ -20,15 +26,19 @@ class ApiService {
         },
       });
 
+      console.log('[API Request] Response status:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('[API Request] Error response:', errorData);
         throw new Error(errorData.message || 'API request failed');
       }
 
       const data = await response.json();
+      console.log('[API Request] Success response:', data);
       return { data };
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('[API Request] Request failed:', error);
       return {
         error: error instanceof Error ? error.message : 'Unknown error occurred',
       };
@@ -105,10 +115,13 @@ class ApiService {
     command: string,
     agentId?: string
   ): Promise<ApiResponse<Message>> {
-    return this.request<Message>('/api/execute', {
+    console.log('[Frontend] Sending command to backend:', command);
+    const response = await this.request<Message>('/api/execute', {
       method: 'POST',
       body: JSON.stringify({ command: command }),
     });
+    console.log('[Frontend] Received response:', response);
+    return response;
   }
 
   // Streaming support for terminal output
